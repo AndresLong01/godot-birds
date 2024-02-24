@@ -1,14 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://clti4cahook5a"]
+[gd_scene load_steps=9 format=3 uid="uid://clti4cahook5a"]
 
 [ext_resource type="Script" path="res://scenes/animal/animal.gd" id="1_7ptwo"]
 [ext_resource type="Texture2D" uid="uid://t5ou8eu67t00" path="res://assets/player/parrot.png" id="1_qbry1"]
+[ext_resource type="Texture2D" uid="uid://snceputbmxny" path="res://assets/items/arrow.png" id="3_vruuy"]
+[ext_resource type="AudioStream" uid="uid://bcjabsolvruuw" path="res://assets/audio/stretch2.ogg" id="4_5mflg"]
+[ext_resource type="AudioStream" uid="uid://ceu74fyudsxk0" path="res://assets/audio/catapult.ogg" id="5_57v7f"]
+[ext_resource type="AudioStream" uid="uid://dcttdu7k7wur3" path="res://assets/audio/kick_wood.ogg" id="6_qshbs"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rnl4o"]
+bounce = 0.2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_llakk"]
 radius = 19.0263
 
 [node name="Animal" type="RigidBody2D"]
 input_pickable = true
+physics_material_override = SubResource("PhysicsMaterial_rnl4o")
 freeze = true
+max_contacts_reported = 1
+contact_monitor = true
 script = ExtResource("1_7ptwo")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -37,5 +47,20 @@ size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "DEBUG"
 
+[node name="Arrow" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_vruuy")
+offset = Vector2(150, 0)
+
+[node name="StretchSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_5mflg")
+
+[node name="LaunchSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_57v7f")
+
+[node name="CollisionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_qshbs")
+
 [connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="sleeping_state_changed" from="." to="." method="_on_sleeping_state_changed"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
