@@ -15,7 +15,7 @@ func _ready():
 	SignalManager.on_level_complete.connect(on_level_complete)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if v_box_container_2.visible == true:
 		if Input.is_action_just_pressed("menu") == true:
 			get_tree().change_scene_to_packed(MAIN)
